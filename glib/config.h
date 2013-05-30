@@ -142,7 +142,7 @@
 #define HAVE_CLOCK_GETTIME 1
 
 /* Have nl_langinfo (CODESET) */
-#define HAVE_CODESET 1
+/* #undef HAVE_CODESET */
 
 /* Define to 1 if you have the <crt_externs.h> header file. */
 /* #undef HAVE_CRT_EXTERNS_H */
@@ -236,7 +236,7 @@
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
 
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
-#define HAVE_LANGINFO_CODESET 1
+/* #undef HAVE_LANGINFO_CODESET */
 
 /* Define to 1 if you have the `lchown' function. */
 #define HAVE_LCHOWN 1
@@ -619,7 +619,7 @@
 #define STDC_HEADERS 1
 
 /* Using GNU libiconv */
-/* #undef USE_LIBICONV_GNU */
+#define USE_LIBICONV_GNU 1
 
 /* Using a native implementation of iconv in a separate library */
 /* #undef USE_LIBICONV_NATIVE */

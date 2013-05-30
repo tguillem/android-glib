@@ -24,13 +24,9 @@
 
 #include "glib.h"
 
-
-#ifndef ANDROID_STUB
 #ifndef G_OS_WIN32
 #include <iconv.h>
 #endif
-#endif
-
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
@@ -61,8 +57,6 @@
 
 #include "galias.h"
 
-typedef void iconv_t;
-
 GQuark 
 g_convert_error_quark (void)
 {
@@ -74,16 +68,12 @@ try_conversion (const char *to_codeset,
 		const char *from_codeset,
 		iconv_t    *cd)
 {
-#ifndef ANDROID_STUB
   *cd = iconv_open (to_codeset, from_codeset);
 
   if (*cd == (iconv_t)-1 && errno == EINVAL)
     return FALSE;
   else
     return TRUE;
-#else
-  return FALSE;
-#endif
 }
 
 static gboolean
@@ -106,10 +96,8 @@ try_to_aliases (const char **to_aliases,
   return FALSE;
 }
 
-#ifndef ANDROID_STUB
 G_GNUC_INTERNAL extern const char ** 
 _g_charset_get_aliases (const char *canonical_name);
-#endif
 
 /**
  * g_iconv_open:
@@ -130,7 +118,6 @@ GIConv
 g_iconv_open (const gchar  *to_codeset,
 	      const gchar  *from_codeset)
 {
-#ifndef ANDROID_STUB
   iconv_t cd;
   
   if (!try_conversion (to_codeset, from_codeset, &cd))
@@ -159,9 +146,6 @@ g_iconv_open (const gchar  *to_codeset,
 
  out:
   return (cd == (iconv_t)-1) ? (GIConv)-1 : (GIConv)cd;
-#else
-  return (GIConv) -1;
-#endif
 }
 
 /**
@@ -188,13 +172,9 @@ g_iconv (GIConv   converter,
 	 gchar  **outbuf,
 	 gsize   *outbytes_left)
 {
-#ifndef ANDROID_STUB
   iconv_t cd = (iconv_t)converter;
 
   return iconv (cd, inbuf, inbytes_left, outbuf, outbytes_left);
-#else
-  return -1;
-#endif
 }
 
 /**
@@ -215,13 +195,9 @@ g_iconv (GIConv   converter,
 gint
 g_iconv_close (GIConv converter)
 {
-#ifndef ANDROID_STUB
   iconv_t cd = (iconv_t)converter;
 
   return iconv_close (cd);
-#else
-  return -1;
-#endif
 }
 
 
@@ -848,7 +824,7 @@ g_convert_with_fallback (const gchar *str,
   g_return_val_if_fail (str != NULL, NULL);
   g_return_val_if_fail (to_codeset != NULL, NULL);
   g_return_val_if_fail (from_codeset != NULL, NULL);
-     
+
   if (len < 0)
     len = strlen (str);
   

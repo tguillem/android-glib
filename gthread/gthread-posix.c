@@ -47,6 +47,15 @@
 #include <sched.h>
 #endif
 
+#include "gtypes.h"
+#include "gerror.h"
+#include "gmessages.h"
+#include "gstrfuncs.h"
+#include "gthread.h"
+#include "gmem.h"
+#include "gtimer.h"
+
+
 #define posix_check_err(err, name) G_STMT_START{			\
   int error = (err); 							\
   if (error)	 		 		 			\
@@ -147,11 +156,15 @@ g_thread_impl_init(void)
 # endif
 #endif /* HAVE_PRIORITIES */
 
+#if 0
 #ifdef USE_CLOCK_GETTIME
  if (sysconf (_SC_MONOTONIC_CLOCK) >= 0)
    posix_clock = CLOCK_MONOTONIC;
  else
    posix_clock = CLOCK_REALTIME;
+#endif
+#else
+   posix_clock = CLOCK_MONOTONIC;
 #endif
 }
 #endif /* _SC_THREAD_STACK_MIN || HAVE_PRIORITIES */

@@ -459,15 +459,12 @@ extern __typeof (g_completion_set_compare) g_completion_set_compare __attribute(
 #undef g_get_filename_charsets 
 extern __typeof (g_get_filename_charsets) g_get_filename_charsets __attribute((alias("IA__g_get_filename_charsets"), visibility("default")));
 
-#ifndef ANDROID_STUB
 #undef g_convert 
 extern __typeof (g_convert) g_convert __attribute((alias("IA__g_convert"), visibility("default")));
-#endif
 
 #undef g_convert_error_quark 
 extern __typeof (g_convert_error_quark) g_convert_error_quark __attribute((alias("IA__g_convert_error_quark"), visibility("default")));
 
-#ifndef ANDROID_STUB
 #undef g_convert_with_fallback 
 extern __typeof (g_convert_with_fallback) g_convert_with_fallback __attribute((alias("IA__g_convert_with_fallback"), visibility("default")));
 
@@ -482,7 +479,6 @@ extern __typeof (g_iconv_close) g_iconv_close __attribute((alias("IA__g_iconv_cl
 
 #undef g_iconv_open 
 extern __typeof (g_iconv_open) g_iconv_open __attribute((alias("IA__g_iconv_open"), visibility("default")));
-#endif
 
 #undef g_locale_from_utf8 
 extern __typeof (g_locale_from_utf8) g_locale_from_utf8 __attribute((alias("IA__g_locale_from_utf8"), visibility("default")));

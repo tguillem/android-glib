@@ -36,14 +36,30 @@ LOCAL_SRC_FILES:= \
 	gqsort.c \
 	gstdio.c \
 	gqueue.c \
+	gmarkup.c \
+	gtree.c \
+	gurifuncs.c \
+	gunicollate.c \
+	galiasdef.c \
+	libcharset/localcharset.c
 
 LOCAL_C_INCLUDES:= \
+	$(LOCAL_PATH) \
 	$(LOCAL_PATH)/../ \
-	$(LOCAL_PATH)
+	$(ICONV_PATH) \
+	$(ICONV_PATH)/include
 
 LOCAL_CFLAGS:= \
-	-DANDROID_STUB
+	-DLIBICONV_PLUG \
+	-DANDROID_STUB \
+	-DLIBDIR="\"/system/lib/\""
 
-LOCAL_MODULE:=libglib
+LOCAL_SHARED_LIBRARIES := iconv
+
+LOCAL_MODULE:= libglib
+
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_ARM_NEON:= true
+endif
 
 include $(BUILD_SHARED_LIBRARY)

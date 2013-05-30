@@ -22,10 +22,8 @@
 #include "config.h"
 
 #include <stdlib.h>
-#ifndef ANDROID_STUB
 #ifdef HAVE_CODESET
 #include <langinfo.h>
-#endif
 #endif
 #include <string.h>
 
@@ -38,9 +36,7 @@
 #undef STRICT
 #endif
 
-#ifndef ANDROID_STUB
 #include "libcharset/libcharset.h"
-#endif
 
 #include "glibintl.h"
 #include "galias.h"
@@ -447,7 +443,6 @@ get_alias_hash (void)
 /* As an abuse of the alias table, the following routines gets
  * the charsets that are aliases for the canonical name.
  */
-#ifndef ANDROID_STUB
 G_GNUC_INTERNAL const char ** 
 _g_charset_get_aliases (const char *canonical_name)
 {
@@ -455,7 +450,6 @@ _g_charset_get_aliases (const char *canonical_name)
 
   return g_hash_table_lookup (alias_hash, canonical_name);
 }
-#endif
 
 static gboolean
 g_utf8_get_charset_internal (const char  *raw_data,
@@ -477,7 +471,6 @@ g_utf8_get_charset_internal (const char  *raw_data,
    * a lock, but has a memory leak and a missing memory
    * barrier, so we lock for it
    */
-#ifndef ANDROID_STUB
   G_LOCK (aliases);
   charset = _g_locale_charset_unalias (raw_data);
   G_UNLOCK (aliases);
@@ -491,7 +484,6 @@ g_utf8_get_charset_internal (const char  *raw_data,
       else
 	return FALSE;
     }
-#endif
 
   /* Assume this for compatibility at present.  */
   *a = "US-ASCII";
@@ -553,7 +545,6 @@ g_get_charset (G_CONST_RETURN char **charset)
       g_static_private_set (&cache_private, cache, charset_cache_free);
     }
 
-#ifndef ANDROID_STUB
   raw = _g_locale_charset_raw ();
   
   if (!(cache->raw && strcmp (cache->raw, raw) == 0))
@@ -566,10 +557,7 @@ g_get_charset (G_CONST_RETURN char **charset)
       cache->is_utf8 = g_utf8_get_charset_internal (raw, &new_charset);
       cache->charset = g_strdup (new_charset);
     }
-#else
-  cache->charset = g_strdup("UTF-8");
-  cache->is_utf8 = TRUE;
-#endif
+
   if (charset)
     *charset = cache->charset;
   
